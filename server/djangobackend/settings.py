@@ -27,13 +27,18 @@ DEBUG = True
 
 APPEND_SLASH = True
 
-ALLOWED_HOSTS = ["localhost"]
+ALLOWED_HOSTS = [
+    "localhost",
+    "127.0.0.1",
+     "tsh-123.eu-gb.mybluemix.net",
+     "djangoapp-tsh.eu-gb.mybluemix.net",
+ ]
 
 
 # Application definition
 
 INSTALLED_APPS = [
-    'djangoapp.apps.DjangoappConfig',
+    'djangoapp.apps.djangoappConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
