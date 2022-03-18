@@ -21,6 +21,11 @@ def get_request(url, **kwargs):
     status_code = response.status_code
     print("With status {} ".format(status_code))
     json_data = json.loads(response.text)
+    
+    # # Write JSON to a file
+    # with open('dealer_review.txt', 'w') as json_file:
+    #     json.dump(json_data, json_file)
+
     return json_data
 
 # Create a `post_request` to make HTTP POST requests
@@ -51,13 +56,13 @@ def get_dealers_from_cf(url, **kwargs):
             # Get its content in `doc` object
             dealer_doc = dealer["doc"]
             if key in dealer_doc.keys():
-                # Create a DealerReview object with values in `doc` object
-                dealer_review_obj = DealerReview(dealership=dealer_doc["dealership"], city=dealer_doc["city"],
+                # Create a CarDealer object with values in `doc` object
+                dealer_obj = CarDealer(address=dealer_doc["address"], city=dealer_doc["city"],
                                     full_name=dealer_doc["full_name"], id=dealer_doc["id"], lat=dealer_doc["lat"],
                                     long=dealer_doc["long"], short_name=dealer_doc["short_name"], st=dealer_doc["st"],
                                     state=dealer_doc["state"], zip=dealer_doc["zip"]
                                     )
-                results.append(dealer_review_obj)
+                results.append(dealer_obj)
 
     return results
 
@@ -67,25 +72,29 @@ def get_dealers_from_cf(url, **kwargs):
 # - Parse JSON results into a DealerView object list
 def get_dealer_by_id_from_cf(url, dealerId):
     results = []
-    json_result = get_request(url, dealerId=dealerId)
+    json_result = get_request(url, id=dealerId)
     # json_result = get_request(url)
+    print(f'======> json_result = {json_result}')
+    with open('review.txt', 'w') as json_file:
+        json.dump(json_result, json_file)
     if json_result:
         # Get the row list in JSON as dealers
-        dealers = json_result["body"]["rows"]
+        dealer_data = json_result["body"]["data"]
+        dealers = dealer_data['docs']
         # For each dealer object
         for dealer in dealers:
             # Setup key to be searched in database
             key = 'id'
             # Get its content in `doc` object
-            dealer_doc = dealer["doc"]
+            dealer_doc = dealer
             if key in dealer_doc.keys():
-                # Create a CarDealer object with values in `doc` object
-                dealer_obj = CarDealer(address=dealer_doc["address"], city=dealer_doc["city"],
-                                    full_name=dealer_doc["full_name"], id=dealer_doc["id"], lat=dealer_doc["lat"],
-                                    long=dealer_doc["long"], short_name=dealer_doc["short_name"], st=dealer_doc["st"],
-                                    state=dealer_doc["state"], zip=dealer_doc["zip"]
+                # Create a DealerReview object with values in `doc` object
+                dealer_review_obj = DealerReview(dealership=dealer_doc["dealership"], name=dealer_doc["name"],
+                                    purchase=dealer_doc["purchase"], review=dealer_doc["review"], purchase_date=dealer_doc["purchase_date"],
+                                    car_make=dealer_doc["car_make"], car_model=dealer_doc["car_model"], car_year=dealer_doc["car_year"],
+                                    id=dealer_doc["id"]
                                     )
-                results.append(dealer_obj)
+                results.append(dealer_review_obj)
 
     return results
 
