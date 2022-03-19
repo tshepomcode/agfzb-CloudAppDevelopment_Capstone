@@ -110,12 +110,14 @@ def get_dealerships(request):
 # ...
 def get_dealer_details(request, dealer_id):
     if request.method == "GET":
+        context = {}
         url = "https://f87164fc.eu-gb.apigw.appdomain.cloud/api/review"
         dealerships_reviews = get_dealer_by_id_from_cf(url, dealerId=dealer_id)
         print(f'========> dealership reviews {dealerships_reviews}')
         # Concat all dealer's short name
-        dealer_names = ' '.join([dealer.short_name for dealer in dealerships_reviews])
-        return HTTPResponse(dealer_names)
+        context['reviews'] = dealerships_reviews
+        # dealer_names = ' '.join([dealer.short_name for dealer in dealerships_reviews])
+        return render(request, 'djangoapp/dealer_details.html', context)
 
 
 
