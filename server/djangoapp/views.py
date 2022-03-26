@@ -1,12 +1,12 @@
 from http.client import HTTPResponse
 from multiprocessing import context
 from django.shortcuts import render
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, render, redirect
 # from .models import related models
 # from .restapis import related methods
-from .restapis import get_dealers_from_cf, get_request, get_dealer_by_id_from_cf
+from .restapis import get_dealers_from_cf, get_request, get_dealer_by_id_from_cf, post_request
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from datetime import datetime
@@ -113,7 +113,7 @@ def get_dealer_details(request, dealer_id):
         context = {}
         url = "https://f87164fc.eu-gb.apigw.appdomain.cloud/api/review"
         dealerships_reviews = get_dealer_by_id_from_cf(url, dealerId=dealer_id)
-        print(f'========> dealership reviews {dealerships_reviews}')
+        # print(f'========> dealership reviews {dealerships_reviews}')
         # Concat all dealer's short name
         context['reviews'] = dealerships_reviews
         # dealer_names = ' '.join([dealer.short_name for dealer in dealerships_reviews])
@@ -124,4 +124,28 @@ def get_dealer_details(request, dealer_id):
 # Create a `add_review` view to submit a review
 # def add_review(request, dealer_id):
 # ...
+def add_review(request, dealer_id):
+    if request.user.is_authenticated:
+        review = dict()
+        review["car_make"] = 'Fiat'
+        review['car_model'] = '500e'
+        review["car_year"] = 2022
+        # review["time"] = datetime.utcnow().isoformat()
+        review["dealership"] = dealer_id
+        review["id"] = 10
+        review["name"] = "Hornetts"
+        review["purchase"] = True
+        review["purchase_date"] = "02/02/22"
+        review["review"] = "This is a great car dealer for sure"
+
+        json_payload = dict()
+        json_payload["review"] = review
+
+        url = "https://f87164fc.eu-gb.apigw.appdomain.cloud/api/review"
+        response = post_request(url, json_payload, dealerId=dealer_id)
+        print(response)
+
+        return JsonResponse(response)
+    else:
+        print("User is unauthenticated!")
 

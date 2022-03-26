@@ -57,6 +57,9 @@ def get_request(url, **kwargs):
 
 
 def post_request(url, payload, **kwargs):
+    print(kwargs)
+    print(f"POST to {url}")
+    print(payload)
     response = requests.post(url, params=kwargs, json=payload)
     status_code = response.status_code
     print("With status {} ". format(status_code))
@@ -125,7 +128,7 @@ def get_dealer_by_id_from_cf(url, dealerId):
             dealer_doc = dealer
             if key in dealer_doc.keys():
                 sentiment = analyze_review_sentiments(dealer_doc["review"])
-                print(f'sentiment = {sentiment}')
+                # print(f'sentiment = {sentiment}')
                 dealership = dealer_doc["dealership"]
                 name = dealer_doc["name"]
                 purchase = dealer_doc["purchase"]
@@ -156,6 +159,7 @@ def get_dealer_by_id_from_cf(url, dealerId):
                 #     dealer_review_obj.car_year = dealer_doc["car_year"]
 
                 # dealer_review_obj.sentiment = sentiment
+                # print(f'dealer review obj.car_model {dealer_review_obj.car_model}')
                 results.append(dealer_review_obj)
 
     return results
