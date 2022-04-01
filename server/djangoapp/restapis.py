@@ -141,9 +141,10 @@ def get_dealer_by_id_from_cf(url, dealerId):
                     id = dealer_doc["id"]
                 else:
                     purchase_date = ''
-                    car_make = ''
-                    car_model = ''
+                    car_make = 'Vehicle not purchased'
+                    car_model = 'Not Applicable'
                     car_year = ''
+                    id = 0
 
                 # Create a DealerReview object with values in `doc` object
                 dealer_review_obj = DealerReview(dealership=dealership, name=name, purchase=purchase,

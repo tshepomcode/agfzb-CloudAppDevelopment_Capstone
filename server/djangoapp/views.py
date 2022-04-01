@@ -1,5 +1,6 @@
 from http.client import HTTPResponse
 from multiprocessing import context
+import re
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.contrib.auth.models import User
@@ -114,13 +115,16 @@ def get_dealerships(request):
 # def get_dealer_details(request, dealer_id):
 # ...
 def get_dealer_details(request, dealer_id):
+    context = {}
     if request.method == "GET":
-        context = {}
         url = "https://f87164fc.eu-gb.apigw.appdomain.cloud/api/review"
         dealerships_reviews = get_dealer_by_id_from_cf(url, dealerId=dealer_id)
         # print(f'========> dealership reviews {dealerships_reviews}')
+        # for review in dealerships_reviews:
+        #     print(f"Review Details: Dealership {review.dealership} | Name: {review.name} \nReview: {review.review}")
         # Concat all dealer's short name
         context['reviews'] = dealerships_reviews
+        context['dealer_id'] =  dealer_id
         # dealer_names = ' '.join([dealer.short_name for dealer in dealerships_reviews])
         return render(request, 'djangoapp/dealer_details.html', context)
 
