@@ -51,7 +51,7 @@ class CarModel(models.Model):
 
 
   def __str__(self) -> str:
-      return f'Name: {self.name} Dealer ID: {self.dealer_id} Car Type: {self.car_type}' \
+      return f'Make: {self.car_make.name} Name: {self.name} Dealer ID: {self.dealer_id} Car Type: {self.car_type} ' \
         + f'Year: {self.year}'
 
 

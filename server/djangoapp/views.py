@@ -107,7 +107,7 @@ def get_dealerships(request):
         context["dealerships"] = dealerships
         print(context)
         # Concat all dealer's short name
-        dealer_names = ' '.join([dealer.short_name for dealer in dealerships])
+        # dealer_names = ' '.join([dealer.short_name for dealer in dealerships])
         # Return a list of dealer short name
         # return HttpResponse(dealer_names)
         return render(request, 'djangoapp/index.html', context)
@@ -120,7 +120,8 @@ def get_dealer_details(request, dealer_id):
     if request.method == "GET":
         url = "https://f87164fc.eu-gb.apigw.appdomain.cloud/api/review"
         dealerships_reviews = get_dealer_by_id_from_cf(url, dealerId=dealer_id)
-        # print(f'========> dealership reviews {dealerships_reviews}')
+        print(f'after get_dealer_by_id_from_cf(url, dealerId=dealer_id)\n \
+          dealership reviews = {dealerships_reviews}')
         # for review in dealerships_reviews:
         #     print(f"Review Details: Dealership {review.dealership} | Name: {review.name} \nReview: {review.review}")
         # Concat all dealer's short name
@@ -136,14 +137,17 @@ def get_dealer_details(request, dealer_id):
 # ...
 def add_review(request, dealer_id):
     context = {}
-    url = "https://f87164fc.eu-gb.apigw.appdomain.cloud/api/review"
+    url = "https://f87164fc.eu-gb.apigw.appdomain.cloud/api/dealership"
     dealership = get_dealer_by_id_from_cf(url, dealerId=dealer_id)
     context["dealer"] = dealership
+    print(f"-----\ndealership = {dealership}")
 
     if request.method == "GET":
-        # Get cars models for the dealer
+        # Get cars models for the dealer        
         cars = CarModel.objects.filter(dealer_id=dealer_id)
-        print(f"cars = CarModel.objects.filter(dealer_id=dealer_id)\n{cars}")
+        # print(f"cars = CarModel.objects.filter(dealer_id=dealer_id)\n{cars}")
+        # print(f"dealer_id = {dealer_id}")
+        
         context["cars"] =  cars
         context["dealer_id"] = dealer_id
         return render(request, 'djangoapp/add_review.html', context)

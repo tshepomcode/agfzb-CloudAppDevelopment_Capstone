@@ -9,7 +9,6 @@ from requests.auth import HTTPBasicAuth
 # e.g., response = requests.get(url, params=params, headers={'Content-Type': 'application/json'},
 #                                     auth=HTTPBasicAuth('apikey', api_key))
 
-
 def get_request(url, **kwargs):
     # api_key = ''
     # review = ''
@@ -113,8 +112,9 @@ def get_dealer_by_id_from_cf(url, dealerId):
     results = []
     json_result = get_request(url, id=dealerId)
     # json_result = get_request(url)
-    # print(f'======> json_result = {json_result}')
-    # with open('review.txt', 'w') as json_file:
+    print(f'======> json_result = {json_result}')
+    print(f'======> type(json_result) = {type(json_result)}')
+    # with open('review1.txt', 'w') as json_file:
     #     json.dump(json_result, json_file)
     if json_result:
         # Get the row list in JSON as dealers
