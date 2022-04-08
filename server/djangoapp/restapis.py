@@ -118,40 +118,75 @@ def get_dealer_by_id_from_cf(url, dealerId):
     #     json.dump(json_result, json_file)
     if json_result:
         # Get the row list in JSON as dealers
-        dealer_data = json_result["body"]["data"]
-        dealers = dealer_data['docs']
+        data_keys = json_result['body'].keys()
+        print(f"data_keys['body']: {data_keys}")
+        if 'data' in json_result['body']:
+            the_dealers_data = json_result["body"]["data"]
+            dealers = the_dealers_data['docs']
+            print(f"the_dealers_data:\n{the_dealers_data}\n")
+            print(f"the_dealers_doc:\n{dealers}\n")
+        else:
+            dealers = json_result["body"]["docs"]
+            # this_dealer_doc = json_result["docs"]
+            print(f"this_dealer_data:\n{dealers}\n")
+            # print(f"this_dealer_doc: \n{this_dealer_doc}\n")
+
+        # dealer_data = json_result["body"]["data"]
+        # dealers = dealer_data['docs']
         # For each dealer object
         for dealer in dealers:
             # Setup key to be searched in database
             key = 'id'
             # Get its content in `doc` object
             dealer_doc = dealer
+            print(f"dealer: {dealer}")
             if key in dealer_doc.keys():
-                sentiment = analyze_review_sentiments(dealer_doc["review"])
+                
                 # print(f'sentiment = {sentiment}')
-                dealership = dealer_doc["dealership"]
-                name = dealer_doc["name"]
-                purchase = dealer_doc["purchase"]
-                review = dealer_doc["review"]
+                
                 if dealer_doc['purchase'] == True:
+                    dealership = dealer_doc["dealership"]
+                    name = dealer_doc["name"]
+                    purchase = dealer_doc["purchase"]
+                    review = dealer_doc["review"]
                     purchase_date = dealer_doc["purchase_date"]
                     car_make = dealer_doc["car_make"]
                     car_model = dealer_doc["car_model"]
                     car_year = dealer_doc["car_year"]
                     id = dealer_doc["id"]
-                else:
-                    purchase_date = ''
-                    car_make = 'Vehicle not purchased'
-                    car_model = 'Not Applicable'
-                    car_year = ''
-                    id = 0
-
-                # Create a DealerReview object with values in `doc` object
-                dealer_review_obj = DealerReview(dealership=dealership, name=name, purchase=purchase,
+                    sentiment = analyze_review_sentiments(dealer_doc["review"])
+                     # Create a DealerReview object with values in `doc` object
+                    dealer_review_obj = DealerReview(dealership=dealership, name=name, purchase=purchase,
                                                  review=review, purchase_date=purchase_date, car_make=car_make,
                                                  car_model=car_model,car_year=car_year, sentiment=sentiment,
                                                  id = id
                                                  )
+                elif dealer_doc['purchase'] == False:
+                    dealership = dealer_doc["dealership"]
+                    name = dealer_doc["name"]
+                    purchase = dealer_doc["purchase"]
+                    review = dealer_doc["review"]
+                    purchase_date = None
+                    car_make = None
+                    car_model = None
+                    car_year = None
+                    id = dealer_doc["id"]
+                    sentiment = analyze_review_sentiments(dealer_doc["review"])
+                     # Create a DealerReview object with values in `doc` object
+                    dealer_review_obj = DealerReview(dealership=dealership, name=name, purchase=purchase,
+                                                 review=review, purchase_date=purchase_date, car_make=car_make,
+                                                 car_model=car_model,car_year=car_year, sentiment=sentiment,
+                                                 id = id
+                                                 )
+                # results.append(dealer_review_obj)
+
+
+                # Create a DealerReview object with values in `doc` object
+                # dealer_review_obj = DealerReview(dealership=dealership, name=name, purchase=purchase,
+                #                                  review=review, purchase_date=purchase_date, car_make=car_make,
+                #                                  car_model=car_model,car_year=car_year, sentiment=sentiment,
+                #                                  id = id
+                #                                  )
                 # if dealer_doc['purchase'] == True:
                 #     dealer_review_obj.id = dealer_doc["id"]
                 #     dealer_review_obj.puchase_date = dealer_doc["purchase_date"]
@@ -162,6 +197,8 @@ def get_dealer_by_id_from_cf(url, dealerId):
                 # dealer_review_obj.sentiment = sentiment
                 # print(f'dealer review obj.car_model {dealer_review_obj.car_model}')
                 results.append(dealer_review_obj)
+            else:
+                return {'error' : 'The are no reviews for the dealeship'}
 
     return results
 
