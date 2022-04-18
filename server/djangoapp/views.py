@@ -137,10 +137,10 @@ def get_dealer_details(request, dealer_id):
 # ...
 def add_review(request, dealer_id):
     context = {}
-    url = "https://f87164fc.eu-gb.apigw.appdomain.cloud/api/dealership"
-    dealership = get_dealer_by_id_from_cf(url, dealerId=dealer_id)
-    context["dealer"] = dealership
-    print(f"-----\ndealership = {dealership}")
+    # url = "https://f87164fc.eu-gb.apigw.appdomain.cloud/api/dealership"
+    # dealership = get_dealer_by_id_from_cf(url, dealerId=dealer_id)
+    # context["dealer"] = dealership
+    # print(f"---in add_review(--\ndealership = {dealership}")
 
     if request.method == "GET":
         # Get cars models for the dealer        
@@ -168,7 +168,7 @@ def add_review(request, dealer_id):
                 if request.POST["purchasecheck"] == 'on':
                     payload["purchase"] = True
             payload["purchase-date"] = request.POST["purchasedate"]
-            payload["car_make"] = car.make.name
+            payload["car_make"] = car.car_make.name
             payload["car_model"] = car.name
             payload["car_year"] = int(car.year.strftime("%Y"))
 
