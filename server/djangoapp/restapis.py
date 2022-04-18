@@ -213,8 +213,10 @@ def analyze_review_sentiments(dealerreview):
     from ibm_watson.natural_language_understanding_v1 import Features, SentimentOptions, EntitiesOptions, KeywordsOptions
     from ibm_watson import AssistantV1, ApiException
 
-    with open('/etc/nlu_api_key.txt') as f:
-        api_key = f.read().strip()
+    # with open('/etc/nlu_api_key.txt') as f:
+    #     api_key = f.read().strip()
+    
+    api_key = 'HhX42guzXHFX_G8VinROszwYQ1ajlGVfCfn9ywAvS3UI'
 
     url = 'https://api.us-south.natural-language-understanding.watson.cloud.ibm.com/instances/76981f41-32f6-469d-b016-998f82f81345'
 
