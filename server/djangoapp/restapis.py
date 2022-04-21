@@ -1,13 +1,23 @@
-from pickle import TRUE
-from urllib import response
+# from pickle import TRUE
+# from urllib import response
+# import requests
+# import json
+# from .models import CarDealer, DealerReview
+# from requests.auth import HTTPBasicAuth
+# from ibm_watson import NaturalLanguageUnderstandingV1
+# from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
+# from ibm_watson.natural_language_understanding_v1 import Features, SentimentOptions, EntitiesOptions, KeywordsOptions
+# # from ibm_watson import AssistantV1, ApiException
+# import time
+
 import requests
 import json
 from .models import CarDealer, DealerReview
 from requests.auth import HTTPBasicAuth
-from ibm_watson import NaturalLanguageUnderstandingV1
 from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
-from ibm_watson.natural_language_understanding_v1 import Features, SentimentOptions, EntitiesOptions, KeywordsOptions
-from ibm_watson import AssistantV1, ApiException
+from ibm_watson import NaturalLanguageUnderstandingV1
+from ibm_watson.natural_language_understanding_v1 import Features,SentimentOptions
+import time
 
 # Create a `get_request` to make HTTP GET requests
 # e.g., response = requests.get(url, params=params, headers={'Content-Type': 'application/json'},
@@ -212,10 +222,10 @@ def get_dealer_by_id_from_cf(url, dealerId):
 # - Call get_request() with specified arguments
 # - Get the returned sentiment label such as Positive or Negative
 def analyze_review_sentiments(dealerreview):
-    from ibm_watson import NaturalLanguageUnderstandingV1
-    from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
-    from ibm_watson.natural_language_understanding_v1 import Features, SentimentOptions, EntitiesOptions, KeywordsOptions
-    from ibm_watson import AssistantV1, ApiException
+    # from ibm_watson import NaturalLanguageUnderstandingV1
+    # from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
+    # from ibm_watson.natural_language_understanding_v1 import Features, SentimentOptions, EntitiesOptions, KeywordsOptions
+    # from ibm_watson import AssistantV1, ApiException
 
     # with open('/etc/nlu_api_key.txt') as f:
     #     api_key = f.read().strip()
