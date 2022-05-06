@@ -30,8 +30,8 @@ APPEND_SLASH = True
 ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
-     "tsh-123.eu-gb.mybluemix.net",
-     "djangoapp-tsh.eu-gb.mybluemix.net",
+     "tsh-456.eu-gb.mybluemix.net",
+     "djangoapp-tsh2.eu-gb.mybluemix.net",
  ]
 
 

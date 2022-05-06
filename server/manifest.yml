@@ -1,11 +1,11 @@
   applications:
   - name: djangoapp-tsh
     routes:
-      - route: tsh-123.eu-gb.mybluemix.net
+      - route: tsh-456.eu-gb.mybluemix.net
     memory: 128M
     buildpack: python_buildpack
   - name: djangoapp-tsh-nginx
     routes:
-      - route: tsh-123.eu-gb.mybluemix.net/static
+      - route: tsh-456.eu-gb.mybluemix.net/static
     memory: 128M
     buildpack: staticfile_buildpack
