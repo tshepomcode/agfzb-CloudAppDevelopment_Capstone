@@ -99,7 +99,8 @@ def registration_request(request):
 def get_dealerships(request):
     context = {}
     if request.method == "GET":
-        url = "https://f87164fc.eu-gb.apigw.appdomain.cloud/api/dealership"
+        url = "https://ef5eac9c.eu-gb.apigw.appdomain.cloud/api/get_dealerships"
+        # url = "https://f87164fc.eu-gb.apigw.appdomain.cloud/api/dealership"
         # url = "https://f87164fc.eu-gb.apigw.appdomain.cloud/api/dealership?state=Minnesota"
         # Get dealers from the URL
         dealerships = get_dealers_from_cf(url)
@@ -118,7 +119,8 @@ def get_dealerships(request):
 def get_dealer_details(request, dealer_id):
     context = {}
     if request.method == "GET":
-        url = "https://f87164fc.eu-gb.apigw.appdomain.cloud/api/review"
+        url = "https://ef5eac9c.eu-gb.apigw.appdomain.cloud/api/get_reviews"
+        # url = "https://f87164fc.eu-gb.apigw.appdomain.cloud/api/review"
         dealerships_reviews = get_dealer_by_id_from_cf(url, dealerId=dealer_id)
         print(f'after get_dealer_by_id_from_cf(url, dealerId=dealer_id)\n \
           dealership reviews = {dealerships_reviews}')
@@ -175,7 +177,7 @@ def add_review(request, dealer_id):
             json_payload = {}
             json_payload["review"] = payload
             
-            review_post_url = "https://f87164fc.eu-gb.apigw.appdomain.cloud/api/review"
+            review_post_url = "https://f87164fc.eu-gb.apigw.appdomain.cloud/api/post_review"
             response = post_request(review_post_url, json_payload, dealerId=dealer_id)
             print(response)
 

@@ -98,7 +98,9 @@ def get_dealers_from_cf(url, **kwargs):
     # json_result = get_request(url)
     if json_result:
         # Get the row list in JSON as dealers
-        dealers = json_result["body"]["rows"]
+        dealers_result = json_result["body"]
+        dealers = json_result["body"]
+        # dealers = json_result["body"]["rows"] -- original
         # For each dealer object
         for dealer in dealers:
             # Setup key to be searched in database
@@ -230,9 +232,11 @@ def analyze_review_sentiments(dealerreview):
     # with open('/etc/nlu_api_key.txt') as f:
     #     api_key = f.read().strip()
     
-    api_key = 'HhX42guzXHFX_G8VinROszwYQ1ajlGVfCfn9ywAvS3UI'
+    api_key = 'YGiBdwKepx8g78czBhEalhwSsSAFNpCCgh2NBRZ4uaI2'
+    # api_key = 'HhX42guzXHFX_G8VinROszwYQ1ajlGVfCfn9ywAvS3UI'
 
-    url = 'https://api.us-south.natural-language-understanding.watson.cloud.ibm.com/instances/76981f41-32f6-469d-b016-998f82f81345'
+    url = 'https://api.eu-gb.natural-language-understanding.watson.cloud.ibm.com/instances/e34a1483-fdbe-4e8d-9fd6-dea2844140da'
+    # url = 'https://api.us-south.natural-language-understanding.watson.cloud.ibm.com/instances/76981f41-32f6-469d-b016-998f82f81345'
 
     params = dict()
     params['api_key'] = api_key
